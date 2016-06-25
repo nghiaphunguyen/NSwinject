@@ -97,16 +97,16 @@ public final class Injected<T>: _InjectedPropertyBox<T>, AutoInjectedPropertyBox
      Similar to `didSet` property observer. Default value does nothing.
      */
     public convenience init(required: Bool = true, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, tag: nil, overrideTag: false, didInject: didInject)
+        self.init(value: nil, required: required, name: nil, overrideTag: false, didInject: didInject)
     }
     
-    public convenience init(required: Bool = true, tag: String?, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, tag: tag, overrideTag: true, didInject: didInject)
+    public convenience init(required: Bool = true, name: String?, didInject: T -> () = { _ in }) {
+        self.init(value: nil, required: required, name: name, overrideTag: true, didInject: didInject)
     }
     
-    private init(value: T?, required: Bool = true, tag: String?, overrideTag: Bool, didInject: T -> ()) {
+    private init(value: T?, required: Bool = true, name: String?, overrideTag: Bool, didInject: T -> ()) {
         self.value = value
-        super.init(required: required, tag: tag, overrideTag: overrideTag, didInject: didInject)
+        super.init(required: required, name: name, overrideTag: overrideTag, didInject: didInject)
     }
     
     public func resolve(container: Container) -> Bool {
@@ -126,7 +126,7 @@ public final class Injected<T>: _InjectedPropertyBox<T>, AutoInjectedPropertyBox
             fatalError("Can not set required property to nil.")
         }
         
-        return Injected(value: value, required: required, tag: tag, overrideTag: overrideTag, didInject: didInject)
+        return Injected(value: value, required: required, name: name, overrideTag: overrideTag, didInject: didInject)
     }
     
 }
@@ -195,16 +195,16 @@ public final class InjectedWeak<T>: _InjectedPropertyBox<T>, AutoInjectedPropert
      Similar to `didSet` property observer. Default value does nothing.
      */
     public convenience init(required: Bool = true, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, tag: nil, overrideTag: false, didInject: didInject)
+        self.init(value: nil, required: required, name: nil, overrideTag: false, didInject: didInject)
     }
     
-    public convenience init(required: Bool = true, tag: String?, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, tag: tag, overrideTag: true, didInject: didInject)
+    public convenience init(required: Bool = true, name: String?, didInject: T -> () = { _ in }) {
+        self.init(value: nil, required: required, name: name, overrideTag: true, didInject: didInject)
     }
     
-    private init(value: T?, required: Bool = true, tag: String?, overrideTag: Bool, didInject: T -> ()) {
+    private init(value: T?, required: Bool = true, name: String?, overrideTag: Bool, didInject: T -> ()) {
         self._value = value as? AnyObject
-        super.init(required: required, tag: tag, overrideTag: overrideTag, didInject: didInject)
+        super.init(required: required, name: name, overrideTag: overrideTag, didInject: didInject)
     }
     
     public func resolve(container: Container) -> Bool {
@@ -231,7 +231,7 @@ public final class InjectedWeak<T>: _InjectedPropertyBox<T>, AutoInjectedPropert
             fatalError("Can not set required property to nil.")
         }
         
-        return InjectedWeak(value: value, required: required, tag: tag, overrideTag: overrideTag, didInject: didInject)
+        return InjectedWeak(value: value, required: required, name: name, overrideTag: overrideTag, didInject: didInject)
     }
     
 }
@@ -240,19 +240,19 @@ private class _InjectedPropertyBox<T> {
     
     let required: Bool
     let didInject: T -> ()
-    let tag: String?
+    let name: String?
     let overrideTag: Bool
     
-    init(required: Bool = true, tag: String?, overrideTag: Bool, didInject: T -> () = { _ in }) {
+    init(required: Bool = true, name: String?, overrideTag: Bool, didInject: T -> () = { _ in }) {
         self.required = required
-        self.tag = tag
+        self.name = name
         self.overrideTag = overrideTag
         self.didInject = didInject
     }
     
     private func resolve(container: Container) -> T? {
         let resolved: T?
-        let tag = overrideTag ? self.tag : nil
+        let tag = overrideTag ? self.name : nil
         resolved = container.resolve(T.self, name: tag)
         
         if let resolved = resolved {
