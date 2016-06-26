@@ -3,7 +3,7 @@
 //  NSwinject
 //
 //  Created by Nghia Nguyen on 6/25/16.
-//  This class implemented in Dip project. I just bring it to Swiniject because of "try" convention.
+//  This class implemented in Dip project. I just convert it to Swiniject because i don't wanna use "try" convention.
 //  See more: https://github.com/AliSoftware/Dip
 
 import Swinject
@@ -97,14 +97,14 @@ public final class Injected<T>: _InjectedPropertyBox<T>, AutoInjectedPropertyBox
      Similar to `didSet` property observer. Default value does nothing.
      */
     public convenience init(required: Bool = true, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, name: nil, overrideTag: false, didInject: didInject)
+        self.init(value: nil, required: required, nil, overrideTag: false, didInject: didInject)
     }
     
-    public convenience init(required: Bool = true, name: String?, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, name: name, overrideTag: true, didInject: didInject)
+    public convenience init(required: Bool = true,_ name: String?, didInject: T -> () = { _ in }) {
+        self.init(value: nil, required: required, name, overrideTag: true, didInject: didInject)
     }
     
-    private init(value: T?, required: Bool = true, name: String?, overrideTag: Bool, didInject: T -> ()) {
+    private init(value: T?, required: Bool = true,_ name: String?, overrideTag: Bool, didInject: T -> ()) {
         self.value = value
         super.init(required: required, name: name, overrideTag: overrideTag, didInject: didInject)
     }
@@ -126,7 +126,7 @@ public final class Injected<T>: _InjectedPropertyBox<T>, AutoInjectedPropertyBox
             fatalError("Can not set required property to nil.")
         }
         
-        return Injected(value: value, required: required, name: name, overrideTag: overrideTag, didInject: didInject)
+        return Injected(value: value, required: required, name, overrideTag: overrideTag, didInject: didInject)
     }
     
 }
@@ -195,14 +195,14 @@ public final class InjectedWeak<T>: _InjectedPropertyBox<T>, AutoInjectedPropert
      Similar to `didSet` property observer. Default value does nothing.
      */
     public convenience init(required: Bool = true, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, name: nil, overrideTag: false, didInject: didInject)
+        self.init(value: nil, required: required, nil, overrideTag: false, didInject: didInject)
     }
     
-    public convenience init(required: Bool = true, name: String?, didInject: T -> () = { _ in }) {
-        self.init(value: nil, required: required, name: name, overrideTag: true, didInject: didInject)
+    public convenience init(required: Bool = true, _ name: String?, didInject: T -> () = { _ in }) {
+        self.init(value: nil, required: required, name, overrideTag: true, didInject: didInject)
     }
     
-    private init(value: T?, required: Bool = true, name: String?, overrideTag: Bool, didInject: T -> ()) {
+    private init(value: T?, required: Bool = true, _ name: String?, overrideTag: Bool, didInject: T -> ()) {
         self._value = value as? AnyObject
         super.init(required: required, name: name, overrideTag: overrideTag, didInject: didInject)
     }
@@ -231,7 +231,7 @@ public final class InjectedWeak<T>: _InjectedPropertyBox<T>, AutoInjectedPropert
             fatalError("Can not set required property to nil.")
         }
         
-        return InjectedWeak(value: value, required: required, name: name, overrideTag: overrideTag, didInject: didInject)
+        return InjectedWeak(value: value, required: required, name, overrideTag: overrideTag, didInject: didInject)
     }
     
 }
