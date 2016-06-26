@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "NSwinject"
-  s.version      = "0.1.1"
+  s.version      = "0.1.2"
   s.summary      = "NSwinject is wrapper of Swinject providing class Inject<T> to auto inject properties."
   s.homepage     = "http://cornerteam.com"
   s.license      = "MIT"
